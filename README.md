@@ -53,9 +53,19 @@ is claimed in the book. Or if it is viable at all.
 
 ### Data Sources
 
-Get list of all US stocks (larger than ... market cap): \
+Get list of all US stocks, found from 2 sources:
+
+- NASDAQ tickers from https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt
+- Other tickers from https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt
+  - These datasets include a few columns we need to filter:
+    - Test issue: if 'Y' then it is a test stock so must be removed.
+    - ETF: if 'Y' then it is an ETF and we can remove it as we want to look specifically at stocks.
+    - NextShares: if 'Y' then remove as it is an investment product similar to an ETF, therefore not a stock.
+    - At this point Symbol is the only column we need so we can remove the rest of the columns once the above cleaning is done.
+
 For US fundamental data: \
-Historical stock prices for back testing: \
+Historical stock prices for back testing:
+
 - yfinance
 
 List of all UK stocks (bigger than ... market cap): \
