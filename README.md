@@ -12,16 +12,16 @@ the market capitalisation affects the stocks being picked by the formula.
 If I have enough time to extend passed this MVP I would like to look into and
 hopefully answer the question:
 
-    Does the 'Magic Formula' still work?
-Additionl features I would like to include:
+**Does the 'Magic Formula' still work?**
+
+Additional features I would like to include:
+
 - UK or European financial data to compare with US equities and compare.
 - Search in the table for individual tickers to see how your stock picks are ranked based on the 'Magic Formula'.
 - Back testing the strategy over the last 5/10/20 years, for US stocks, to help answer the above question.
 - Back test UK stocks over the same time intervals and compare results to US stocks.
 
-
-
-## What is the formula?
+## What is the formula? - [How it works](https://www.magicformulainvesting.com/Home/HowItWorks)
 
 Understanding what the 'Magic Formula' is will no doubt make this project more understandable.
 The essence of the formula is to by 'good stocks' at 'low prices'.
@@ -34,19 +34,31 @@ To find stocks at 'low prices' we will rank the stocks based on their Earnings y
 
     EBIT / (net fixed assets + working capital)       * 100
 
+The stocks are ranked based on both of these metrics and the overall rank
+is the sum of the two individual ranks.\
+The strategy is then to buy 20-30 of the top ranked stocks and hold them for 12 months
+selling after the 12 month period. There are some tax nuances around when to sell but that
+won't be a factor in this project.
+
+The after selling repeat the process ranking all stocks based on their current
+fundamental data and price.
+
 ## Why do this project?
+
 The original book came out in 2005 with an updated version in 2010, I would like 
 to investigate, 15 years later, if the investment strategy still works as well as
 is claimed in the book. Or if it is viable at all.
 
-
 ## Plan of Action
 
 ### Data Sources
+
 Get list of all US stocks (larger than ... market cap): \
 For US fundamental data: \
 Historical stock prices for back testing: \
-    yfinance\
-List of all UK stocks (bigger than ... market cap): \
-UK Fundamental Data: 
+- yfinance
 
+List of all UK stocks (bigger than ... market cap): \
+UK Fundamental Data:
+
+### User Story 1
