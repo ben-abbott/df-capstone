@@ -1,7 +1,7 @@
 import os
 import sys
 from config.env_config import setup_env
-from etl.extract.extract import get_ticker_list
+from etl.extract.extract import extract_tickers
 
 
 def main():
@@ -12,7 +12,7 @@ def main():
         f'{os.getenv("ENV", "error")} environment!'
     )
 
-    print(get_ticker_list())
+    print(extract_tickers())
 
 
 def run_env_setup():
