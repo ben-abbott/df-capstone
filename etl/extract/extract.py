@@ -12,7 +12,7 @@ def get_ticker_lists() -> list:
     return tickers_list
 
 
-def extract_tickers():
+def extract_tickers() -> pd.DataFrame:
     nasdaq_tickers = get_ticker_lists()[0]
     nyse_tickers = get_ticker_lists()[1]
     cleaned_nas_tickers = clean_nasdaq_tickers(nasdaq_tickers)
