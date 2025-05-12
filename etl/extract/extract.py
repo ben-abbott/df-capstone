@@ -37,14 +37,61 @@ def extract_tickers():
 # Get fundamental data for calculations
 
 def extract_from_balance_sheet(tickers):
-    pass
+    balance_sheet_res = []
+    for tick in tickers:
+        url = f'https://financialmodelingprep.com/api/v3/balance-sheet-statement/{tick}?period=annual&apikey={API_KEY}'
+        try:
+            res = requests.get(url)
+            data = res.json()
+            if data:
+                balance_sheet_res.append(data[0])
+        except Exception as e:
+            print(f'Error fetching {tick}: {e}')
+    balance_sheet_df = pd.DataFrame(balance_sheet_res)
+    balance_sheet_df = balance_sheet_df[['date',
+                                        'symbol',
+                                         'cashAndCashEquivalents',
+                                         'propertyPlantEquipmentNet',
+                                         'totalDebt']]
+    return balance_sheet_df
 
 # Get stock info data for insights
 
 
 def extract_from_company_info(tickers):
-    pass
+    company_info_res = []
+    for tick in tickers:
+        url = f'https://financialmodelingprep.com/api/v3/profile/{tick}?apikey={API_KEY}'
+        try:
+            res = requests.get(url)
+            data = res.json()
+            if data:
+                company_info_res.append(data[0])
+        except Exception as e:
+            print(f'Error fetching {tick}: {e}')
+    company_info_df = pd.DataFrame(company_info_res)
+    company_info_df = company_info_df[['symbol', 'mktCap', 'industry', 'sector',
+                                       'image', 'ipoDate',
+                                       'isActivelyTrading']]
+    return
 
 
 def extract_from_financial_score(tickers):
+    score_res = []
+    for tick in tickers:
+        url = f'https://financialmodelingprep.com/api/v4/score?symbol={tick}&apikey={API_KEY}'
+        try:
+            res = requests.get(url)
+            data = res.json()
+            if data:
+                score_res.append(data[0])
+        except Exception as e:
+            print(f'Error fetching {tick}: {e}')
+    score_df = pd.DataFrame(score_res)
+    score_df = score_df[['symbol', 'ebit', 'workingCapital']]
+    return score_df
+
+
+def extract_data():
+    # calls all individual functions and returns list of data frames
     pass
