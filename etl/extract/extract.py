@@ -2,9 +2,11 @@ import pandas as pd
 import requests
 # from pathlib import Path
 import os
+from joblib import Memory
 from etl.transform.transform_tickers import clean_nyse_tickers
 from etl.transform.transform_tickers import clean_nasdaq_tickers
 from etl.transform.transform_tickers import join_tickers
+from etl.transform.transform import join_df
 
 API_KEY = 'b95993f82e2d0048935cfd947df28088'
 NASDAQ_FILE_PATH = os.path.join(
@@ -37,6 +39,7 @@ def extract_tickers() -> pd.DataFrame:
 # Get fundamental data for calculations
 
 def extract_from_balance_sheet(tickers):
+    print('Calling balance sheet API...')
     balance_sheet_res = []
     for tick in tickers:
         url = f'https://financialmodelingprep.com/api/v3/balance-sheet-statement/{tick}?period=annual&apikey={API_KEY}'
@@ -53,12 +56,14 @@ def extract_from_balance_sheet(tickers):
                                          'cashAndCashEquivalents',
                                          'propertyPlantEquipmentNet',
                                          'totalDebt']]
+    print('Balance sheet data complete.')
     return balance_sheet_df
 
 # Get stock info data for insights
 
 
 def extract_from_company_info(tickers):
+    print('Calling company info API...')
     company_info_res = []
     for tick in tickers:
         url = f'https://financialmodelingprep.com/api/v3/profile/{tick}?apikey={API_KEY}'
@@ -73,10 +78,12 @@ def extract_from_company_info(tickers):
     company_info_df = company_info_df[['symbol', 'mktCap', 'industry', 'sector',
                                        'image', 'ipoDate',
                                        'isActivelyTrading']]
-    return
+    print('Completed company info.')
+    return company_info_df
 
 
 def extract_from_financial_score(tickers):
+    print('Calling financial score API...')
     score_res = []
     for tick in tickers:
         url = f'https://financialmodelingprep.com/api/v4/score?symbol={tick}&apikey={API_KEY}'
@@ -89,9 +96,20 @@ def extract_from_financial_score(tickers):
             print(f'Error fetching {tick}: {e}')
     score_df = pd.DataFrame(score_res)
     score_df = score_df[['symbol', 'ebit', 'workingCapital']]
+    print('Completed financial score.')
     return score_df
 
 
-def extract_data():
+def extract_df(tickers):
     # calls all individual functions and returns list of data frames
-    pass
+    balance_sheet_df = extract_from_balance_sheet(tickers)
+    company_info_df = extract_from_company_info(tickers)
+    score_df = extract_from_financial_score(tickers)
+    df_list = [balance_sheet_df, company_info_df, score_df]
+    return df_list
+
+
+def extract_data(tickers):
+    df_list = extract_df(tickers)
+    all_data = join_df(df_list)
+    return all_data
