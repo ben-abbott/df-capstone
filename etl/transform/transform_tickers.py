@@ -17,8 +17,8 @@ def clean_nasdaq_tickers(df) -> pd.DataFrame:
                               'ETF', 'NextShares']
     df.drop(labels=nasdaq_columns_to_drop, axis=1, inplace=True)
     # make the ticker the index and rename to Ticker
-    df.rename(columns={'Symbol': 'Ticker'}, inplace=True)
-    df.set_index('Ticker')
+    df.rename(columns={'Symbol': 'symbol'}, inplace=True)
+    df.set_index('symbol')
     return df
 
 
@@ -41,19 +41,17 @@ def clean_nyse_tickers(df) -> pd.DataFrame:
                             'Test Issue', 'NASDAQ Symbol']
     df.drop(labels=nyse_columns_to_drop, axis=1, inplace=True)
     # rename symbol to ticker and make it index
-    df.rename(columns={'ACT Symbol': 'Ticker'}, inplace=True)
-    df.set_index('Ticker')
+    df.rename(columns={'ACT Symbol': 'symbol'}, inplace=True)
+    df.set_index('symbol')
     return df
 
 # check if any tickers exist in both dataframes, they don't in this
 # example but could implement this in the future to handle duplicates
 
-
-def check_for_duplicates_between_df(df1, df2) -> bool:
-    pass
+# def check_for_duplicates_between_df(df1, df2) -> bool:
+#     pass
 
 
 def join_tickers(df1, df2):
     all_tickers = pd.concat([df1, df2])
-    all_tickers = all_tickers.set_index('Ticker')
-    return all_tickers.sort_index()
+    return all_tickers.sort_values(by='symbol', ascending=True)
