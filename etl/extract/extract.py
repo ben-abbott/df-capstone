@@ -19,6 +19,10 @@ NYSE_FILE_PATH = os.path.join(
 # NASDAQ_FILE_PATH = 'data/raw/nasdaq_tickers.txt'
 # NYSE_FILE_PATH = 'data/raw/other_tickers.txt'
 
+# Setup a local cache folder
+# With ChatGPTs help:
+memory = Memory(location='.api_cache', verbose=0)
+
 
 def get_ticker_lists() -> list:
     nasdaq_tickers = pd.read_csv(NASDAQ_FILE_PATH, sep='|')
@@ -37,7 +41,7 @@ def extract_tickers() -> pd.DataFrame:
 
 
 # Get fundamental data for calculations
-
+@memory.cache
 def extract_from_balance_sheet(tickers):
     print('Calling balance sheet API...')
     balance_sheet_res = []
@@ -62,6 +66,7 @@ def extract_from_balance_sheet(tickers):
 # Get stock info data for insights
 
 
+@memory.cache
 def extract_from_company_info(tickers):
     print('Calling company info API...')
     company_info_res = []
@@ -82,6 +87,7 @@ def extract_from_company_info(tickers):
     return company_info_df
 
 
+@memory.cache
 def extract_from_financial_score(tickers):
     print('Calling financial score API...')
     score_res = []
