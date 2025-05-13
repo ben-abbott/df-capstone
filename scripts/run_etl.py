@@ -18,6 +18,7 @@ def main():
     # test_tickers = ticker_df.index.tolist()[0:500]
     # tickers_list = ticker_df.index.tolist()
     all_api_data = extract_data(static_test)
+    print(all_api_data)
 
 
 def run_env_setup():
