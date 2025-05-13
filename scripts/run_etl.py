@@ -1,7 +1,7 @@
 import os
 import sys
 from config.env_config import setup_env
-# from etl.extract.extract import extract_tickers
+from etl.extract.extract import extract_tickers
 from etl.extract.extract import extract_data
 
 
@@ -12,12 +12,9 @@ def main():
         f"ETL pipeline run successfully in "
         f'{os.getenv("ENV", "error")} environment!'
     )
-    # ticker_df = extract_tickers()
-    static_test = ['AAPL', 'AACB', 'AAPD', 'ABLLL',
-                   'HPKEW', 'HPK', 'NMRA', 'PLSE', 'PNTG', 'SEEM']
-    # test_tickers = ticker_df.index.tolist()[0:500]
-    # tickers_list = ticker_df.index.tolist()
-    all_api_data = extract_data(static_test)
+    ticker_df = extract_tickers()
+    tickers_list = ticker_df.index.tolist()
+    all_api_data = extract_data(tickers_list)
     print(all_api_data)
 
 
