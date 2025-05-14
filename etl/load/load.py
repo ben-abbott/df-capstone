@@ -3,11 +3,6 @@ import os
 
 
 def load_to_bucket(file, object_name):
-    # AWS_ACCESS_KEY = 'AKIAYQE7QM5IAUVFYXLF'
-    # AWS_SECRET_KEY = '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'
-    # AWS_S3_BUCKET_NAME = 'df-capstone-clean-data'
-    # AWS_REGION = 'eu-west-2'
-
     AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
     AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
     AWS_S3_BUCKET_NAME = os.getenv("AWS_S3_BUCKET_NAME")
