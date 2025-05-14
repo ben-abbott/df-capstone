@@ -8,7 +8,7 @@ from etl.transform.transform_tickers import clean_nasdaq_tickers
 from etl.transform.transform_tickers import join_tickers
 from etl.transform.transform import join_df
 
-API_KEY = 'b95993f82e2d0048935cfd947df28088'
+API_KEY = os.getenv("API_KEY")
 NASDAQ_FILE_PATH = os.path.join(
     os.path.dirname(__file__), '../../data/raw/nasdaq_tickers.txt'
 )
@@ -16,8 +16,6 @@ NYSE_FILE_PATH = os.path.join(
     os.path.dirname(__file__), '../../data/raw/other_tickers.txt'
 )
 
-# NASDAQ_FILE_PATH = 'data/raw/nasdaq_tickers.txt'
-# NYSE_FILE_PATH = 'data/raw/other_tickers.txt'
 
 # Setup a local cache folder
 # With ChatGPTs help:
@@ -80,8 +78,8 @@ def extract_from_company_info(tickers):
         except Exception as e:
             print(f'Error fetching {tick}: {e}')
     company_info_df = pd.DataFrame(company_info_res)
-    company_info_df = company_info_df[['symbol', 'mktCap', 'industry', 'sector',
-                                       'image', 'ipoDate',
+    company_info_df = company_info_df[['symbol', 'price', 'mktCap', 'industry',
+                                       'sector', 'image', 'ipoDate',
                                        'isActivelyTrading']]
     print('Completed company info.')
     return company_info_df
