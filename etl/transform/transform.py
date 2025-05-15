@@ -8,7 +8,7 @@ def join_df(df_list):
         all_data = all_data.merge(df_list[3], on='symbol', how='inner')
     else:
         print('''The number of DataFrames to be 
-              joined is not 3, can only join 3 DataFrames''')
+              joined is not 4, can only join 4 DataFrames''')
     return all_data
 
 

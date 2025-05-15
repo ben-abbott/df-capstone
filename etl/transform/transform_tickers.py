@@ -18,7 +18,7 @@ def clean_nasdaq_tickers(df) -> pd.DataFrame:
     df.drop(labels=nasdaq_columns_to_drop, axis=1, inplace=True)
     # make the ticker the index and rename to Ticker
     df.rename(columns={'Symbol': 'symbol'}, inplace=True)
-    df.set_index('symbol')
+    df.set_index('symbol', inplace=True)
     return df
 
 
@@ -42,7 +42,7 @@ def clean_nyse_tickers(df) -> pd.DataFrame:
     df.drop(labels=nyse_columns_to_drop, axis=1, inplace=True)
     # rename symbol to ticker and make it index
     df.rename(columns={'ACT Symbol': 'symbol'}, inplace=True)
-    df.set_index('symbol')
+    df.set_index('symbol', inplace=True)
     return df
 
 # check if any tickers exist in both dataframes, they don't in this
