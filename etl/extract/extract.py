@@ -114,7 +114,7 @@ def extract_df(tickers):
 
 
 def extract_data(ticker_df):
-    tickers_list = ticker_df['symbol'].tolist()
+    tickers_list = ticker_df.index.tolist()
     df_list = extract_df(tickers_list)
     df_list.append(ticker_df)
     all_data = join_df(df_list)
